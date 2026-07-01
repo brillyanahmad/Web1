@@ -41,31 +41,21 @@ window.addEventListener("scroll", () => {
 
 });
 
-/* ==========================
-   Mobile Navigation
-========================== */
-
+/* ========================== Mobile Navigation ========================== */
 const menuBtn = document.querySelector(".menu-btn");
-
 const navLinks = document.querySelector(".nav-links");
 
-menuBtn.addEventListener("click", () => {
-
-    navLinks.classList.toggle("active");
-
-    if(navLinks.classList.contains("active")){
-
-        menuBtn.innerHTML =
-        '<i class="fa-solid fa-xmark"></i>';
-
-    }else{
-
-        menuBtn.innerHTML =
-        '<i class="fa-solid fa-bars"></i>';
-
-    }
-
-});
+// Perbaikan: Memastikan menuBtn dan navLinks ada di HTML sebelum memasang event listener
+if (menuBtn && navLinks) {
+    menuBtn.addEventListener("click", () => {
+        navLinks.classList.toggle("active");
+        if (navLinks.classList.contains("active")) {
+            menuBtn.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+        } else {
+            menuBtn.innerHTML = '<i class="fa-solid fa-bars"></i>';
+        }
+    });
+}
 
 /* ==========================
    Close Menu After Click
