@@ -1738,3 +1738,381 @@ button{
     color:white;
 
 }
+
+/* ==========================
+   BACK TO TOP
+========================== */
+
+.back-to-top{
+
+    position:fixed;
+
+    right:25px;
+
+    bottom:25px;
+
+    width:55px;
+
+    height:55px;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    border-radius:50%;
+
+    background:linear-gradient(135deg,#2a7fff,#1658d4);
+
+    color:white;
+
+    cursor:pointer;
+
+    opacity:0;
+
+    visibility:hidden;
+
+    transition:.3s;
+
+    z-index:999;
+
+    box-shadow:0 10px 25px rgba(42,127,255,.35);
+
+}
+
+.back-to-top.show{
+
+    opacity:1;
+
+    visibility:visible;
+
+}
+
+.back-to-top:hover{
+
+    transform:translateY(-5px);
+
+}
+
+/* ===== Ripple Effect ===== */
+
+.btn-primary{
+
+position:relative;
+
+overflow:hidden;
+
+}
+
+.ripple{
+
+position:absolute;
+
+border-radius:50%;
+
+transform:scale(0);
+
+background:rgba(255,255,255,.45);
+
+animation:ripple .6s linear;
+
+pointer-events:none;
+
+}
+
+@keyframes ripple{
+
+to{
+
+transform:scale(4);
+
+opacity:0;
+
+}
+
+}
+
+/* ===== Cursor Glow ===== */
+
+.cursor-glow{
+
+position:fixed;
+
+width:220px;
+
+height:220px;
+
+border-radius:50%;
+
+background:rgba(42,127,255,.15);
+
+filter:blur(70px);
+
+pointer-events:none;
+
+transform:translate(-50%,-50%);
+
+z-index:0;
+
+transition:.08s linear;
+
+}
+
+/* ===== Scroll Progress ===== */
+
+.scroll-progress{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+height:3px;
+
+width:0;
+
+background:#2a7fff;
+
+z-index:99999;
+
+box-shadow:0 0 12px #2a7fff;
+
+}
+
+/* ==========================
+   LIGHTBOX
+========================== */
+
+.lightbox{
+
+position:fixed;
+
+inset:0;
+
+background:rgba(0,0,0,.9);
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+opacity:0;
+
+visibility:hidden;
+
+transition:.3s;
+
+z-index:99999;
+
+}
+
+.lightbox.show{
+
+opacity:1;
+
+visibility:visible;
+
+}
+
+.lightbox-content{
+
+position:relative;
+
+max-width:90%;
+
+max-height:90%;
+
+}
+
+.lightbox img{
+
+max-width:100%;
+
+max-height:90vh;
+
+border-radius:15px;
+
+}
+
+.lightbox-close{
+
+position:absolute;
+
+top:-40px;
+
+right:0;
+
+font-size:40px;
+
+cursor:pointer;
+
+color:white;
+
+}
+
+/* ==========================
+   TOAST
+========================== */
+
+.toast{
+
+position:fixed;
+
+top:30px;
+
+right:30px;
+
+background:#2a7fff;
+
+padding:15px 25px;
+
+border-radius:12px;
+
+color:white;
+
+font-weight:600;
+
+transform:translateX(150%);
+
+transition:.3s;
+
+z-index:99999;
+
+}
+
+.toast.show{
+
+transform:translateX(0);
+
+}
+
+/* ==========================
+   FLOATING UPLOAD
+========================== */
+
+.floating-upload{
+
+position:fixed;
+
+bottom:95px;
+
+right:25px;
+
+width:58px;
+
+height:58px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+border-radius:50%;
+
+background:#2a7fff;
+
+color:white;
+
+text-decoration:none;
+
+font-size:22px;
+
+box-shadow:0 10px 30px rgba(42,127,255,.4);
+
+z-index:999;
+
+}
+
+/* ==========================
+   THEME BUTTON
+========================== */
+
+.theme-toggle{
+
+position:fixed;
+
+bottom:165px;
+
+right:25px;
+
+width:58px;
+
+height:58px;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+border-radius:50%;
+
+background:#111b30;
+
+color:white;
+
+cursor:pointer;
+
+font-size:20px;
+
+z-index:999;
+
+}
+
+/* ==========================
+   LIGHT MODE
+========================== */
+
+body.light-mode{
+
+background:#f5f7fb;
+
+color:#111;
+
+}
+
+body.light-mode .navbar{
+
+background:rgba(255,255,255,.85);
+
+}
+
+body.light-mode .about,
+body.light-mode .stats,
+body.light-mode .featured-gallery,
+body.light-mode .testimonial{
+
+background:#eef2f8;
+
+}
+
+body.light-mode h1,
+body.light-mode h2,
+body.light-mode h3,
+body.light-mode h4{
+
+color:#111;
+
+}
+
+/* ==========================
+   IMAGE FADE-IN
+========================== */
+
+img{
+
+opacity:0;
+
+transition:.6s;
+
+}
+
+img.loaded{
+
+opacity:1;
+
+}
