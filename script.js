@@ -4,22 +4,7 @@
    Part 1
 ================================================== */
 
-/* ==========================
-   Loading Screen
-========================== */
 
-window.addEventListener("load", () => {
-
-    const loader = document.querySelector(".loading-screen");
-
-    setTimeout(() => {
-
-        loader.style.opacity = "0";
-        loader.style.visibility = "hidden";
-
-    }, 1000);
-
-});
 
 /* ==========================
    Navbar Scroll Effect
