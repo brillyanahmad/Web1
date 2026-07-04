@@ -1,33 +1,175 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="id">
 <head>
-    <title>Sample script for uploading file to Google Drive without authorization</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.js"></script>
-</head>
-
-<body>
-    <form action="https://www.kokpitsmagajo.my.id/upload.html" id="form" method="post">
-        Upload a file
-        <div id="data"></div>
-        <input name="file" id="uploadfile" type="file">
-        <input id="submit" type="submit">
-    </form>
-    <script>
-    $('#uploadfile').on("change", function() {
-        var file = this.files[0];
-        var fr = new FileReader();
-        fr.fileName = file.name;
-        fr.onload = function(e) {
-            e.target.result
-            html = '<input type="hidden" name="data" value="' + e.target.result.replace(/^.*,/, '') + '" >';
-            html += '<input type="hidden" name="mimetype" value="' + e.target.result.match(/^.*(?=;)/)[0] + '" >';
-            html += '<input type="hidden" name="filename" value="' + e.target.fileName + '" >';
-            $("#data").empty().append(html);
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload File ke Google Drive</title>
+    <style>
+        /* Reset & Base Styles */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
         }
-        fr.readAsDataURL(file);
-    });
-    </script>
-</body>
 
+        body {
+            background: linear-gradient(135deg, #e0eafc, #cfdef3);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* Card Container (Responsif) */
+        .upload-container {
+            background-color: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 500px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .upload-container:hover {
+            transform: translateY(-5px);
+        }
+
+        h2 {
+            color: #333333;
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
+        p.subtitle {
+            color: #777777;
+            font-size: 14px;
+            margin-bottom: 30px;
+        }
+
+        /* Form Layout */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* Custom Dropzone / Upload Area */
+        .file-drop-area {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 35px;
+            border: 2px dashed #4a90e2;
+            border-radius: 12px;
+            background-color: #f8faff;
+            cursor: pointer;
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .file-drop-area:hover {
+            background-color: #f0f4fe;
+            border-color: #357abd;
+        }
+
+        /* Icon bayangan untuk mempercantik */
+        .upload-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+            color: #4a90e2;
+        }
+
+        /* Menyembunyikan input asli yang kaku */
+        .file-input {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .file-msg {
+            font-size: 15px;
+            color: #555555;
+            font-weight: 500;
+            word-break: break-all;
+        }
+
+        /* Tombol Submit */
+        .submit-btn {
+            background-color: #4a90e2;
+            color: white;
+            border: none;
+            padding: 14px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
+        }
+
+        .submit-btn:hover {
+            background-color: #357abd;
+            box-shadow: 0 6px 16px rgba(53, 122, 189, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: scale(0.98);
+        }
+
+        /* Media Queries untuk layar super kecil (HP Kuno/Kecil) */
+        @media (max-width: 400px) {
+            .upload-container {
+                padding: 25px 15px;
+            }
+            h2 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="upload-container">
+        <h2>Upload File</h2>
+        <p class="subtitle">Unggah file Anda langsung ke Google Drive</p>
+        
+        <!-- Sesuaikan action/method dengan skrip Google Apps Script milikmu jika ada -->
+        <form action="" method="POST" enctype="multipart/form-data">
+            
+            <div class="file-drop-area">
+                <span class="upload-icon">📁</span>
+                <span class="file-msg" id="file-text">Pilih file atau seret ke sini</span>
+                <input class="file-input" type="file" name="file" id="file-chooser" required>
+            </div>
+            
+            <button type="submit" class="submit-btn">Kirim File</button>
+        </form>
+    </div>
+
+    <script>
+        // Efek JavaScript sederhana untuk mengubah teks saat file berhasil dipilih
+        const fileChooser = document.getElementById('file-chooser');
+        const fileText = document.getElementById('file-text');
+
+        fileChooser.addEventListener('change', function() {
+            if (fileChooser.files.length > 0) {
+                fileText.innerText = "File terpilih: " + fileChooser.files[0].name;
+                fileText.style.color = "#2e7d32"; // Ubah teks jadi hijau tanda sukses terpilih
+            } else {
+                fileText.innerText = "Pilih file atau seret ke sini";
+                fileText.style.color = "#555555";
+            }
+        });
+    </script>
+
+</body>
 </html>
