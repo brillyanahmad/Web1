@@ -1,224 +1,243 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Upload File ke Google Drive</title>
-    <style>
-        /* Reset & Base Styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Unggah Karya Divisi</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-        body {
-            background: linear-gradient(135deg, #e0eafc, #cfdef3);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
+    body {
+      background-color: #fafafa;
+      color: #262626;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-        /* Card Container (Responsif) */
-        .upload-container {
-            background-color: #ffffff;
-            border-radius: 16px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            padding: 40px 30px;
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            transition: transform 0.3s ease;
-        }
+    .upload-container {
+      background-color: #ffffff;
+      border: 1px solid #dbdbdb;
+      border-radius: 3px;
+      padding: 30px;
+      width: 100%;
+      max-width: 450px;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    }
 
-        .upload-container:hover {
-            transform: translateY(-5px);
-        }
+    h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 25px;
+      color: #262626;
+    }
 
-        h2 {
-            color: #333333;
-            margin-bottom: 8px;
-            font-size: 24px;
-        }
+    label {
+      display: block;
+      text-align: left;
+      margin-bottom: 8px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #262626;
+    }
 
-        p.subtitle {
-            color: #777777;
-            font-size: 14px;
-            margin-bottom: 30px;
-        }
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #dbdbdb;
+      border-radius: 4px;
+      background-color: #fafafa;
+      font-size: 14px;
+      margin-bottom: 20px;
+      outline: none;
+      color: #262626;
+      cursor: pointer;
+    }
 
-        /* Form Layout */
-        form {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+    select:focus {
+      border-color: #a8a8a8;
+    }
 
-        /* Grouping untuk Form Input */
-        .form-group {
-            text-align: left;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
+    .file-drop-area {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px;
+      border: 2px dashed #dbdbdb;
+      border-radius: 4px;
+      background-color: #fafafa;
+      cursor: pointer;
+      margin-bottom: 25px;
+      transition: background-color 0.2s ease;
+    }
 
-        .form-group label {
-            font-size: 14px;
-            font-weight: 600;
-            color: #444444;
-        }
+    .file-drop-area:hover {
+      background-color: #f5f5f5;
+    }
 
-        /* Styling Dropdown Kategori */
-        .category-select {
-            width: 100%;
-            padding: 12px 16px;
-            font-size: 15px;
-            color: #333333;
-            background-color: #f8faff;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            outline: none;
-            cursor: pointer;
-            transition: border-color 0.3s ease, box-shadow 0.3s ease;
-            appearance: none; /* Menghilangkan arrow bawaan browser untuk custom styling */
-            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%234a90e2' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>");
-            background-repeat: no-repeat;
-            background-position: right 16px center;
-            background-size: 16px;
-        }
+    .upload-icon {
+      font-size: 40px;
+      margin-bottom: 10px;
+    }
 
-        .category-select:focus {
-            border-color: #4a90e2;
-            box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.1);
-        }
+    .file-msg {
+      font-size: 14px;
+      color: #8e8e8e;
+      font-weight: 500;
+      word-break: break-all;
+    }
 
-        /* Custom Dropzone / Upload Area */
-        .file-drop-area {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            padding: 35px;
-            border: 2px dashed #4a90e2;
-            border-radius: 12px;
-            background-color: #f8faff;
-            cursor: pointer;
-            transition: background-color 0.3s ease, border-color 0.3s ease;
-        }
+    .file-input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 100%;
+      opacity: 0;
+      cursor: pointer;
+    }
 
-        .file-drop-area:hover {
-            background-color: #f0f4fe;
-            border-color: #357abd;
-        }
+    .submit-btn {
+      width: 100%;
+      background-color: #0095f6;
+      color: #ffffff;
+      border: none;
+      border-radius: 4px;
+      padding: 12px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
 
-        /* Icon bayangan untuk mempercantik */
-        .upload-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
-            color: #4a90e2;
-        }
+    .submit-btn:hover {
+      background-color: #1877f2;
+    }
 
-        /* Menyembunyikan input asli yang kaku */
-        .file-input {
-            position: absolute;
-            left: 0;
-            top: 0;
-            height: 100%;
-            width: 100%;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        .file-msg {
-            font-size: 15px;
-            color: #555555;
-            font-weight: 500;
-            word-break: break-all;
-        }
-
-        /* Tombol Submit */
-        .submit-btn {
-            background-color: #4a90e2;
-            color: white;
-            border: none;
-            padding: 14px;
-            border-radius: 8px;
-            font-size: 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: background-color 0.3s ease, box-shadow 0.3s ease;
-            box-shadow: 0 4px 12px rgba(74, 144, 226, 0.3);
-            margin-top: 10px;
-        }
-
-        .submit-btn:hover {
-            background-color: #357abd;
-            box-shadow: 0 6px 16px rgba(53, 122, 189, 0.4);
-        }
-
-        .submit-btn:active {
-            transform: scale(0.98);
-        }
-
-        /* Media Queries untuk layar super kecil (HP Kuno/Kecil) */
-        @media (max-width: 400px) {
-            .upload-container {
-                padding: 25px 15px;
-            }
-            h2 {
-                font-size: 20px;
-            }
-        }
-    </style>
+    .submit-btn:disabled {
+      background-color: #b2dffc;
+      cursor: not-allowed;
+    }
+  </style>
 </head>
 <body>
 
-    <div class="upload-container">
-        <h2>Upload File</h2>
-        <p class="subtitle">Unggah file Anda langsung ke Google Drive</p>
+  <div class="upload-container">
+    <h2>Unggah Karya Baru</h2>
+    
+    <form id="uploadForm">
+      <label for="divisi-select">Divisi Kategori</label>
+      <select id="divisi-select" name="divisi" required>
+        <option value="" disabled selected>-- Pilih Divisi Anda --</option>
+        <option value="Coding">Divisi Coding</option>
+        <option value="Digital Art">Divisi Digital Art</option>
+        <option value="Film">Divisi Film</option>
+        <option value="Fotografi">Divisi Fotografi</option>
+      </select>
+
+      <div class="file-drop-area">
+        <span class="upload-icon">📁</span>
+        <span class="file-msg" id="file-text">Pilih file atau seret ke sini</span>
+        <input class="file-input" type="file" name="file" id="file-chooser" required>
+      </div>
+      
+      <button type="submit" class="submit-btn" id="submit-btn">Kirim File</button>
+    </form>
+  </div>
+
+  <script>
+    const fileChooser = document.getElementById('file-chooser');
+    const fileText = document.getElementById('file-text');
+    const uploadForm = document.getElementById('uploadForm');
+    const submitBtn = document.getElementById('submit-btn');
+    const divisiSelect = document.getElementById('divisi-select');
+
+    // ⚠️ GANTI DENGAN URL WEB APP GOOGLE APPS SCRIPT ANDA SETELAH DI-DEPLOY
+    const URL_APPS_SCRIPT = "https://script.google.com/macros/s/XXXXX/exec"; 
+
+    // Mengubah efek teks saat file terpilih
+    fileChooser.addEventListener('change', function() {
+      if (fileChooser.files.length > 0) {
+        fileText.innerText = "File terpilih: " + fileChooser.files[0].name;
+        fileText.style.color = "#262626"; 
+      } else {
+        fileText.innerText = "Pilih file atau seret ke sini";
+        fileText.style.color = "#8e8e8e";
+      }
+    });
+
+    // Handle pengiriman file menggunakan Fetch API secara background
+    uploadForm.addEventListener('submit', function(e) {
+      e.preventDefault(); // Mencegah refresh halaman secara default
+
+      if (fileChooser.files.length === 0) return;
+
+      // Mengubah status tombol menjadi loading
+      submitBtn.innerText = "Sedang Mengunggah...";
+      submitBtn.disabled = true;
+
+      const file = fileChooser.files[0];
+      const selectedDivisi = divisiSelect.value;
+      const reader = new FileReader();
+
+      // Membaca file sebagai format base64
+      reader.onload = function(event) {
+        const base64Data = event.target.result.split(',')[1];
         
-        <form action="" method="POST" enctype="multipart/form-data">
-            
-            <div class="form-group">
-                <label for="kategori">Kategori Karya</label>
-                <select name="kategori" id="kategori" class="category-select" required>
-                    <option value="" disabled selected>-- Pilih Kategori Karya --</option>
-                    <option value="artikel_tulisan">Artikel / Tulisan</option>
-                    <option value="desain_grafis">Desain Grafis / Gambar</option>
-                    <option value="audio_video">Audio / Video</option>
-                    <option value="aplikasi_web">Aplikasi / Source Code</option>
-                </select>
-            </div>
-            
-            <div class="file-drop-area">
-                <span class="upload-icon">📁</span>
-                <span class="file-msg" id="file-text">Pilih file atau seret ke sini</span>
-                <input class="file-input" type="file" name="file" id="file-chooser" required>
-            </div>
-            
-            <button type="submit" class="submit-btn">Kirim File</button>
-        </form>
-    </div>
+        // Menyusun parameter data yang akan dikirim
+        const formData = new URLSearchParams();
+        formData.append('fileData', base64Data);
+        formData.append('mimeType', file.type);
+        formData.append('fileName', file.name);
+        formData.append('divisi', selectedDivisi); // Mengirimkan parameter kategori divisi
 
-    <script>
-        // Efek JavaScript sederhana untuk mengubah teks saat file berhasil dipilih
-        const fileChooser = document.getElementById('file-chooser');
-        const fileText = document.getElementById('file-text');
-
-        fileChooser.addEventListener('change', function() {
-            if (fileChooser.files.length > 0) {
-                fileText.innerText = "File terpilih: " + fileChooser.files[0].name;
-                fileText.style.color = "#2e7d32"; // Ubah teks jadi hijau tanda sukses terpilih
-            } else {
-                fileText.innerText = "Pilih file atau seret ke sini";
-                fileText.style.color = "#555555";
-            }
+        // Mengirimkan request POST ke Google Apps Script backend
+        fetch(URL_APPS_SCRIPT, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+        .then(response => response.json())
+        .then(data => {
+          if (data.status === 'success') {
+            // Memberikan notifikasi sukses tanpa reload atau pindah halaman
+            fileText.innerText = "🎉 Sukses! " + data.message;
+            fileText.style.color = "#2e7d32";
+            submitBtn.innerText = "Berhasil!";
+            submitBtn.style.backgroundColor = "#2e7d32";
+            uploadForm.reset();
+          } else {
+            alert("Gagal mengunggah: " + data.message);
+            resetButton();
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+          alert("Terjadi kesalahan koneksi saat mengunggah file.");
+          resetButton();
         });
-    </script>
+      };
 
+      reader.readAsDataURL(file);
+    });
+
+    function resetButton() {
+      submitBtn.innerText = "Kirim File";
+      submitBtn.disabled = false;
+      submitBtn.style.backgroundColor = "#0095f6";
+    }
+  </script>
 </body>
 </html>
